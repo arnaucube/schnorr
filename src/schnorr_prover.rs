@@ -34,8 +34,9 @@ impl MessageTarget {
 
     pub fn set_witness(&self, pw: &mut PartialWitness<GoldF>, msg: &Vec<GoldF>) -> Result<()> {
         assert!(msg.len() == self.msg.len());
-        self.msg.iter().zip(msg.iter())
-            .for_each(|(&t, &x)| {pw.set_target(t, x);});
+        self.msg.iter().zip(msg.iter()).for_each(|(&t, &x)| {
+            pw.set_target(t, x);
+        });
 
         Ok(())
     }
@@ -58,8 +59,8 @@ impl SchnorrSignatureTarget {
         pw: &mut PartialWitness<GoldF>,
         sig: &SchnorrSignature,
     ) -> Result<()> {
-        pw.set_target(self.s, GoldilocksField::from_canonical_u64(sig.s))?;
-        pw.set_target(self.e, GoldilocksField::from_canonical_u64(sig.e))?;
+        pw.set_target(self.s, GoldilocksField::from_canonical_u64(sig.s));
+        pw.set_target(self.e, GoldilocksField::from_canonical_u64(sig.e));
         Ok(())
     }
 }
@@ -76,7 +77,7 @@ impl SchnorrPublicKeyTarget {
     }
 
     pub fn set_witness(&self, pw: &mut PartialWitness<GoldF>, pk: &SchnorrPublicKey) -> Result<()> {
-        pw.set_target(self.pk, pk.pk)?;
+        pw.set_target(self.pk, pk.pk);
         Ok(())
     }
 }
